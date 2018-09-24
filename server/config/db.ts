@@ -1,32 +1,29 @@
-import * as mongoose from 'mongoose';
-	class DataBase {
-		private DB_URI ='mongodb://127.0.0.1/madrugaCrush';
-		private DB_CONNECTION;
-	
-	constructor() { }
-	
-	createConnection() {
-		mongoose.connect(this.DB_URI);
-		this.logger(this.DB_URI);
-	}
+import * as mongoose from "mongoose";
 
-	closeConnection(message, callback){
-		this.DB_CONNECTION.close(() => {
-			console.log('Mongoose foi desconectado pelo: '+ message);
-			callback();
-		})
-	}
+class DataBase {
+  private DB_URI = "mongodb://127.0.0.1/madrugaCrush";
+  private DB_CONNECTION;
 
-	logger(uri){
-		this.DB_CONNECTION = mongoose.connection;
+  constructor() {}
+  createConnection() {
+    mongoose.connect(this.DB_URI);
+    this.logger(this.DB_URI);
+  }
 
-		this.DB_CONNECTION.on('connected', () => console.log('Mongoose está conectado ao ' + uri));
+  closeConnection(message, callback) {
+    this.DB_CONNECTION.close(() => {
+      console.log("Mongoose foi desconectado pelo: " + message);
+      callback();
+    });
+  }
 
-		this.DB_CONNECTION.on('error', error => console.error.bind(console, 'Erro na conexão: ' + error));
+  logger(uri) {
+    this.DB_CONNECTION = mongoose.connection;
 
-		this.DB_CONNECTION.on('disconnected', () => console.log('Mongoose está desconectado do ' + uri));
-		
-	}
+    this.DB_CONNECTION.on("connected", () =>
+      console.log("Mongoose está conectado ao " + uri)
+    );
+  }
 }
 
-export  default DataBases;
+export default DataBase;
